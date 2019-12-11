@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
 {
+    public PlayerMovement player;
+
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +16,11 @@ public class Gamemanager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // reset the player
+            player.ResetPlayer();
+
+        }
     }
 }
