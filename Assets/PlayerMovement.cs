@@ -60,14 +60,15 @@ public class PlayerMovement : MonoBehaviour {
         // multiply the x values by -1 to correctly map the cursor position
         // instead of direct mapping, lerp player to cursor's x position
         Debug.Log("Mouse Pos: " + Camera.main.ScreenToWorldPoint(mousePos));
+        Vector3 mousepos = Camera.main.ScreenToWorldPoint(mousePos);
+
 
         if (pc.groundHit) {
             rb.AddForce(0, 0, forwardForce * Time.deltaTime);
+            Vector3 newPos = new Vector3(mousepos.x * -1, transform.position.y, transform.position.z);
+            transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime);
 
-
-
-
-            
+            /*
             if (Input.GetKey("d"))
             {
                 rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0);
@@ -77,6 +78,7 @@ public class PlayerMovement : MonoBehaviour {
             {
                 rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0);
             }
+            */
             
         }
     }
