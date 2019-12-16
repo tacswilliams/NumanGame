@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 position;
     public float width;
     public float height;
+    public Text x;
+
 
     public float timer = 0f;
     // Start is called before the first frame update
@@ -45,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
-
 
 
 
@@ -102,8 +103,8 @@ public class PlayerMovement : MonoBehaviour
                     Vector2 pos = touch.position;
                     pos.x = (pos.x - width) / width;
                     pos.y = (pos.y - height) / height;
-                    position = new Vector3(-pos.x, transform.position.y, transform.position.z);
-
+                    position = new Vector3(pos.x.Remap(-1,0,-12,12), transform.position.y, transform.position.z);
+			x.text = "" + position;
 
                     transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime);
                 }
@@ -114,4 +115,10 @@ public class PlayerMovement : MonoBehaviour
     }
 }
 
-
+public static class ExtensionMethods {
+ 
+public static float Remap (this float value, float from1, float to1, float from2, float to2) {
+    return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+}
+   
+}
