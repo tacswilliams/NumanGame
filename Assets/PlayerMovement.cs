@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour { 
+public class PlayerMovement : MonoBehaviour
+{
 
     public Rigidbody rb;
     public Playercolleshion pc;
     public float forwardForce = 2000f;
     public float sidewaysForce = 500f;
-    
+    private Vector3 position;
+    public float width;
+    public float height;
+
     public float timer = 0f;
     // Start is called before the first frame update
 
@@ -14,7 +18,15 @@ public class PlayerMovement : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
         pc = GetComponent<Playercolleshion>();
+        width = (float)Screen.width;
+        height = (float)Screen.height;
+
+        position = new Vector3(0.0f, 0.0f, 0.0f);
+
     }
+
+
+
 
     public void ResetPlayer()
     {
@@ -26,19 +38,19 @@ public class PlayerMovement : MonoBehaviour {
 
         //ground hit false
         pc.groundHit = false;
-        
-   
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        
+
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
 
     }
-    
-        
-    
+
+
+
 
     // Update is called once per frame
-    void FixedUpdate() 
+    void FixedUpdate()
     {
         // repositions player to face front bsed on a timer
         if (pc.obstacleHit && timer < 1)
@@ -49,7 +61,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         // Resets the timer and obstacle hit variable
-        if(timer > 1)
+        if (timer > 1)
         {
             timer = 0f;
             pc.obstacleHit = false;
@@ -63,10 +75,11 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 mousepos = Camera.main.ScreenToWorldPoint(mousePos);
 
 
-        if (pc.groundHit) {
+        if (pc.groundHit)
+        {
             rb.AddForce(0, 0, forwardForce * Time.deltaTime);
-            Vector3 newPos = new Vector3(mousepos.x * -1, transform.position.y, transform.position.z);
-            transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime);
+           // Vector3 newPos = new Vector3(mousepos.x * -1, transform.position.y, transform.position.z);
+            //transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime);
 
             /*
             if (Input.GetKey("d"))
@@ -79,7 +92,24 @@ public class PlayerMovement : MonoBehaviour {
                 rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0);
             }
             */
-            
+
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    Vector2 pos = touch.position;
+                    pos.x = (pos.x - width) / width;
+                    pos.y = (pos.y - height) / height;
+                    position = new Vector3(-pos.x, transform.position.y, transform.position.z);
+
+
+                    transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime);
+                }
+
+
+            }
         }
     }
 }
