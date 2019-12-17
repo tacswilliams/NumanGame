@@ -7,6 +7,7 @@ public class Gamemanager : MonoBehaviour
     public PlayerMovement player;
 
 // hello
+// again
 
     // Start is called before the first frame update
     void Start()
