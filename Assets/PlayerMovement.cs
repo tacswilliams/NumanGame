@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 position;
     public float width;
     public float height;
-    public Text x;
 
 
     public float timer = 0f;
@@ -104,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
                     pos.x = (pos.x - width) / width;
                     pos.y = (pos.y - height) / height;
                     position = new Vector3(pos.x.Remap(-1,0,-12,12), transform.position.y, transform.position.z);
-			x.text = "" + position;
 
                     transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime);
                 }
